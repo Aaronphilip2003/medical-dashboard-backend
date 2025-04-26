@@ -1,0 +1,19 @@
+# 1. Build new image
+docker build -t medical-backend_web .
+
+# 2. Tag it
+docker tag medical-backend_web gcr.io/medical-backend-457918/medical-backend
+
+# 3. Push it
+docker push gcr.io/medical-backend-457918/medical-backend
+
+# 4. Deploy
+gcloud run deploy medical-backend \
+  --image gcr.io/medical-backend-457918/medical-backend \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --memory 2Gi \
+  --cpu 1 \
+  --timeout 900 \
+  --set-env-vars WORKERS=1

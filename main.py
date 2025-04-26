@@ -11,13 +11,20 @@ from routes import (
 
 app = FastAPI()
 
-# Add CORS middleware
+origins = [
+    "http://localhost:3000",
+    "https://medical-dashboard-mit-wpu.vercel.app"  # Remove trailing slash and specific paths
+]
+
+# Add CORS middleware BEFORE any routes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allows all origins
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],  # Allows all methods
-    allow_headers=["*"],  # Allows all headers
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_headers=["*"],
+    expose_headers=["*"],
+    max_age=3600,
 )
 
 # Include routers
